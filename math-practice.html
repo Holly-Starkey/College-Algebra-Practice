@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice - You've Got This! 💪</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #FDF8F3;
+            --bg-card: #FFFFFF;
+            --text-primary: #2D3748;
+            --text-secondary: #5A6578;
+            --accent-calm: #7CB4B8;
+            --accent-success: #81B29A;
+            --accent-encourage: #E07A5F;
+            --accent-highlight: #F2CC8F;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.8;
+            font-size: 18px;
+            letter-spacing: 0.02em;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: white;
+            border-radius: 50px;
+            padding: 6px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: linear-gradient(90deg, var(--accent-calm), var(--accent-success));
+            border-radius: 50px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 12px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .question-type {
+            display: inline-block;
+            background: var(--accent-highlight);
+            color: var(--text-primary);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            line-height: 1.9;
+            margin-bottom: 28px;
+            color: var(--text-primary);
+        }
+
+        .question-text em {
+            background: linear-gradient(120deg, var(--accent-highlight) 0%, var(--accent-highlight) 100%);
+            background-size: 100% 40%;
+            background-repeat: no-repeat;
+            background-position: 0 90%;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        /* Input Styling */
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 1.2rem;
+            font-family: 'Lexend', sans-serif;
+            border: 2px solid #E8E8E8;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: #FAFAFA;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--accent-calm);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(124, 180, 184, 0.15);
+        }
+
+        .answer-input::placeholder {
+            color: #B0B0B0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 16px 36px;
+            font-size: 1.1rem;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-calm);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #6AA3A7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 180, 184, 0.35);
+        }
+
+        .btn-secondary {
+            background: #F0F0F0;
+            color: var(--text-secondary);
+            margin-left: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: #E5E5E5;
+        }
+
+        .btn-next {
+            background: var(--accent-success);
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #6FA389;
+            transform: translateY(-2px);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 24px;
+            padding: 24px;
+            border-radius: 12px;
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #E8F5EE 0%, #D4EDDA 100%);
+            border-left: 4px solid var(--accent-success);
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #FFF5F3 0%, #FEEAE6 100%);
+            border-left: 4px solid var(--accent-encourage);
+            display: block;
+        }
+
+        .feedback-title {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feedback.correct .feedback-title {
+            color: #2D6A4F;
+        }
+
+        .feedback.incorrect .feedback-title {
+            color: #C45C4A;
+        }
+
+        .feedback-content {
+            color: var(--text-primary);
+            line-height: 2;
+        }
+
+        .feedback-content p {
+            margin-bottom: 16px;
+        }
+
+        .step-box {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 16px 0;
+        }
+
+        .step-box h4 {
+            color: var(--accent-encourage);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .math-highlight {
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            display: inline-block;
+            margin: 4px 0;
+            border: 1px solid #E0E0E0;
+        }
+
+        /* Score Display */
+        .score-display {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 24px;
+        }
+
+        .score-display h3 {
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .score-number {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--accent-calm);
+        }
+
+        /* Final Screen */
+        .final-screen {
+            text-align: center;
+            padding: 60px 40px;
+            display: none;
+        }
+
+        .final-screen.show {
+            display: block;
+        }
+
+        .final-emoji {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .final-screen h2 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .final-score {
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--accent-success);
+            margin: 24px 0;
+        }
+
+        .final-message {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        /* Encouragement Banner */
+        .encouragement {
+            background: linear-gradient(135deg, var(--accent-highlight) 0%, #F5D89A 100%);
+            padding: 16px 24px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px 16px;
+            }
+
+            .question-card {
+                padding: 28px 20px;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+            }
+        }
+
+        /* Hint styling */
+        .hint-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: #F8F8F8;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-highlight);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Math Practice</h1>
+            <p>Take your time. You've got this! 💪</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+        <p class="progress-text" id="progressText">Question 1 of 5</p>
+
+        <!-- Score Display -->
+        <div class="score-display">
+            <h3>Current Score</h3>
+            <div class="score-number"><span id="currentScore">0</span> / <span id="totalAnswered">0</span></div>
+        </div>
+
+        <!-- Question Container -->
+        <div id="questionContainer">
+            <!-- Questions will be inserted here -->
+        </div>
+
+        <!-- Final Screen -->
+        <div class="question-card final-screen" id="finalScreen">
+            <div class="final-emoji">🎉</div>
+            <h2>Practice Complete!</h2>
+            <div class="final-score" id="finalScore">0 / 5</div>
+            <p class="final-message" id="finalMessage">Great job working through these problems!</p>
+            <button class="btn btn-primary" onclick="restartQuiz()">Practice Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Question Bank
+        const questions = [
+            {
+                id: 1,
+                type: "Translating Words to Equations",
+                question: `Translate the sentence into an equation:<br><br><em>Three more than the quotient of a number and 4 is equal to 8.</em><br><br>Use the variable <strong>n</strong> for the unknown number.`,
+                correctAnswers: ["n/4+3=8", "n/4 + 3 = 8", "3+n/4=8", "3 + n/4 = 8", "(n/4)+3=8", "(n/4) + 3 = 8"],
+                hint: "Remember: 'quotient' means division, and 'more than' means addition!",
+                explanation: {
+                    title: "Let's break this down step by step!",
+                    content: `
+                        <p>This problem uses some key math vocabulary. Let's decode it together:</p>
+                        
+                        <div class="step-box">
+                            <h4>Step 1: Find the quotient</h4>
+                            <p><strong>"The quotient of a number and 4"</strong> means we're dividing.<br>
+                            Quotient = division result<br>
+                            So this part becomes: <span class="math-highlight">n ÷ 4</span> or <span class="math-highlight">n/4</span></p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 2: Add "three more"</h4>
+                            <p><strong>"Three more than"</strong> means we add 3 to whatever comes after.<br>
+                            So we add 3 to our quotient: <span class="math-highlight">n/4 + 3</span></p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 3: Set it equal</h4>
+                            <p><strong>"Is equal to 8"</strong> means we use the equals sign.<br>
+                            Final equation: <span class="math-highlight">n/4 + 3 = 8</span></p>
+                        </div>
+                        
+                        <p><strong>Quick tip:</strong> "Quotient" always means division! Think "Q" for "Quotient" = "÷"</p>
+                    `
+                }
+            },
+            {
+                id: 2,
+                type: "Translating Words to Equations",
+                question: `Translate this sentence into an equation:<br><br><em>The product of 5 and Maya's age is 75.</em><br><br>Use the variable <strong>m</strong> to represent Maya's age.`,
+                correctAnswers: ["5m=75", "5m = 75", "5*m=75", "5*m = 75", "5(m)=75", "5(m) = 75", "m*5=75", "m*5 = 75"],
+                hint: "Remember: 'product' means multiplication!",
+                explanation: {
+                    title: "Let's break this down!",
+                    content: `
+                        <p>This one is about multiplication. Here's how to think about it:</p>
+                        
+                        <div class="step-box">
+                            <h4>Step 1: Understand "product"</h4>
+                            <p><strong>"Product"</strong> is the result of multiplication.<br>
+                            When you see "product," think: <span class="math-highlight">×</span></p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 2: Identify what's being multiplied</h4>
+                            <p><strong>"The product of 5 and Maya's age"</strong><br>
+                            We're multiplying: 5 × m<br>
+                            In algebra, we write this as: <span class="math-highlight">5m</span></p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 3: Complete the equation</h4>
+                            <p><strong>"Is 75"</strong> means equals 75.<br>
+                            Final equation: <span class="math-highlight">5m = 75</span></p>
+                        </div>
+                        
+                        <p><strong>Quick tip:</strong> "Product" = multiplication. Think "Product from a factory" = things multiplied/produced!</p>
+                    `
+                }
+            },
+            {
+                id: 3,
+                type: "Translating Words to Equations",
+                question: `Translate this sentence into an equation:<br><br><em>12 more than Tyler's score is 47.</em><br><br>Use the variable <strong>t</strong> to represent Tyler's score.`,
+                correctAnswers: ["t+12=47", "t + 12 = 47", "12+t=47", "12 + t = 47"],
+                hint: "'More than' means addition!",
+                explanation: {
+                    title: "Let's work through this!",
+                    content: `
+                        <p>This problem uses "more than" which tells us to add:</p>
+                        
+                        <div class="step-box">
+                            <h4>Step 1: Identify the base amount</h4>
+                            <p><strong>"Tyler's score"</strong> is our starting point.<br>
+                            We represent this with: <span class="math-highlight">t</span></p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 2: Add "12 more"</h4>
+                            <p><strong>"12 more than"</strong> means we add 12 to Tyler's score.<br>
+                            This gives us: <span class="math-highlight">t + 12</span></p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 3: Set equal to the result</h4>
+                            <p><strong>"Is 47"</strong> completes our equation.<br>
+                            Final equation: <span class="math-highlight">t + 12 = 47</span></p>
+                        </div>
+                        
+                        <p><strong>Quick tip:</strong> "More than" = addition. "Less than" = subtraction!</p>
+                    `
+                }
+            },
+            {
+                id: 4,
+                type: "Simple Interest",
+                question: `Jordan deposits <strong>$500</strong> into an account that pays <strong>simple interest</strong> at a rate of <strong>3% per year</strong>.<br><br>How much interest will Jordan earn in the first <strong>4 years</strong>?<br><br>Enter your answer in dollars (just the number, no $ symbol).`,
+                correctAnswers: ["60", "60.00", "$60", "$60.00"],
+                hint: "Simple Interest Formula: I = P × r × t (Principal × rate × time)",
+                explanation: {
+                    title: "Let's solve this step by step!",
+                    content: `
+                        <p>Simple interest uses a straightforward formula. Let's apply it:</p>
+                        
+                        <div class="step-box">
+                            <h4>The Simple Interest Formula</h4>
+                            <p><span class="math-highlight">I = P × r × t</span></p>
+                            <p>Where:<br>
+                            • <strong>I</strong> = Interest earned<br>
+                            • <strong>P</strong> = Principal (starting amount)<br>
+                            • <strong>r</strong> = Rate (as a decimal)<br>
+                            • <strong>t</strong> = Time (in years)</p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 1: Identify your values</h4>
+                            <p>P = $500 (the deposit)<br>
+                            r = 3% = 0.03 (divide by 100!)<br>
+                            t = 4 years</p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 2: Plug into the formula</h4>
+                            <p><span class="math-highlight">I = 500 × 0.03 × 4</span></p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 3: Calculate</h4>
+                            <p>500 × 0.03 = 15<br>
+                            15 × 4 = <span class="math-highlight">60</span><br><br>
+                            <strong>Interest earned = $60</strong></p>
+                        </div>
+                        
+                        <p><strong>Remember:</strong> Always convert the percentage to a decimal by dividing by 100! (3% → 0.03)</p>
+                    `
+                }
+            },
+            {
+                id: 5,
+                type: "Simple Interest",
+                question: `Sophia deposits <strong>$1,500</strong> into an account that pays <strong>simple interest</strong> at a rate of <strong>5% per year</strong>.<br><br>How much interest will Sophia earn in the first <strong>3 years</strong>?<br><br>Enter your answer in dollars (just the number, no $ symbol).`,
+                correctAnswers: ["225", "225.00", "$225", "$225.00"],
+                hint: "Simple Interest Formula: I = P × r × t",
+                explanation: {
+                    title: "Let's work through this together!",
+                    content: `
+                        <p>We'll use the simple interest formula again:</p>
+                        
+                        <div class="step-box">
+                            <h4>Remember the Formula</h4>
+                            <p><span class="math-highlight">I = P × r × t</span></p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 1: Identify your values</h4>
+                            <p>P = $1,500 (the deposit)<br>
+                            r = 5% = 0.05 (move decimal 2 places left)<br>
+                            t = 3 years</p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 2: Plug into the formula</h4>
+                            <p><span class="math-highlight">I = 1,500 × 0.05 × 3</span></p>
+                        </div>
+                        
+                        <div class="step-box">
+                            <h4>Step 3: Calculate step by step</h4>
+                            <p>1,500 × 0.05 = 75 (this is one year's interest)<br>
+                            75 × 3 = <span class="math-highlight">225</span><br><br>
+                            <strong>Interest earned = $225</strong></p>
+                        </div>
+                        
+                        <p><strong>Pro tip:</strong> You can also think of it as: "What's 5% of $1,500? That's $75 per year. Times 3 years = $225!"</p>
+                    `
+                }
+            }
+        ];
+
+        // State
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = 0;
+
+        // Initialize
+        function init() {
+            renderQuestion();
+            updateProgress();
+        }
+
+        // Render current question
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            container.innerHTML = `
+                <div class="encouragement" id="encouragement">
+                    ${getEncouragement()}
+                </div>
+                
+                <div class="question-card">
+                    <span class="question-type">${q.type}</span>
+                    <div class="question-text">${q.question}</div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Your answer:</label>
+                        <input type="text" 
+                               class="answer-input" 
+                               id="answerInput" 
+                               placeholder="Type your answer here..."
+                               autocomplete="off"
+                               onkeypress="handleKeyPress(event)">
+                        <p class="hint-text">💡 ${q.hint}</p>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="checkAnswer()">Check My Answer</button>
+                        <button class="btn btn-secondary" onclick="skipQuestion()">Skip for Now</button>
+                    </div>
+                    
+                    <div class="feedback" id="feedback"></div>
+                </div>
+            `;
+            
+            // Focus input
+            setTimeout(() => {
+                document.getElementById('answerInput').focus();
+            }, 100);
+        }
+
+        // Get random encouragement
+        function getEncouragement() {
+            const messages = [
+                "Take a deep breath. There's no rush! 🌟",
+                "You're doing great! One step at a time. 💪",
+                "Remember: mistakes help us learn! 🌱",
+                "You've got this! Believe in yourself. ✨",
+                "Focus on understanding, not speed. 🎯"
+            ];
+            return messages[currentQuestion % messages.length];
+        }
+
+        // Check answer
+        function checkAnswer() {
+            const input = document.getElementById('answerInput');
+            const feedback = document.getElementById('feedback');
+            const q = questions[currentQuestion];
+            
+            // Normalize the answer (remove extra spaces, lowercase)
+            const userAnswer = input.value.trim().replace(/\s+/g, ' ');
+            
+            // Check if correct (compare normalized versions)
+            const isCorrect = q.correctAnswers.some(correct => {
+                const normalizedCorrect = correct.replace(/\s+/g, '').toLowerCase();
+                const normalizedUser = userAnswer.replace(/\s+/g, '').toLowerCase();
+                return normalizedCorrect === normalizedUser;
+            });
+            
+            answered++;
+            
+            if (isCorrect) {
+                score++;
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `
+                    <div class="feedback-title">🎉 Excellent work!</div>
+                    <div class="feedback-content">
+                        <p>That's exactly right! You're understanding this well.</p>
+                    </div>
+                    <div class="button-group" style="margin-top: 20px;">
+                        <button class="btn btn-next" onclick="nextQuestion()">Continue →</button>
+                    </div>
+                `;
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `
+                    <div class="feedback-title">💭 Not quite - let's learn from this!</div>
+                    <div class="feedback-content">
+                        <p><strong>${q.explanation.title}</strong></p>
+                        ${q.explanation.content}
+                    </div>
+                    <div class="button-group" style="margin-top: 20px;">
+                        <button class="btn btn-next" onclick="nextQuestion()">I understand - Continue →</button>
+                    </div>
+                `;
+            }
+            
+            // Disable input and check button
+            input.disabled = true;
+            
+            // Update score display
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('totalAnswered').textContent = answered;
+        }
+
+        // Skip question
+        function skipQuestion() {
+            nextQuestion();
+        }
+
+        // Next question
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion >= questions.length) {
+                showFinalScreen();
+            } else {
+                renderQuestion();
+                updateProgress();
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = 
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+        }
+
+        // Show final screen
+        function showFinalScreen() {
+            document.getElementById('questionContainer').classList.add('hidden');
+            document.getElementById('finalScreen').classList.add('show');
+            document.getElementById('finalScore').textContent = `${score} / ${questions.length}`;
+            
+            // Custom message based on score
+            const percentage = (score / questions.length) * 100;
+            let message = '';
+            
+            if (percentage === 100) {
+                message = "Perfect score! You absolutely crushed it! 🌟";
+            } else if (percentage >= 80) {
+                message = "Amazing work! You really understand this material! 💪";
+            } else if (percentage >= 60) {
+                message = "Good effort! Keep practicing and you'll master this! 🌱";
+            } else {
+                message = "Great job completing the practice! Each attempt makes you stronger. Review the explanations and try again! 💪";
+            }
+            
+            document.getElementById('finalMessage').textContent = message;
+            
+            // Update progress to 100%
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progressText').textContent = 'Practice Complete!';
+        }
+
+        // Restart quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = 0;
+            
+            document.getElementById('finalScreen').classList.remove('show');
+            document.getElementById('questionContainer').classList.remove('hidden');
+            document.getElementById('currentScore').textContent = '0';
+            document.getElementById('totalAnswered').textContent = '0';
+            
+            renderQuestion();
+            updateProgress();
+        }
+
+        // Handle Enter key
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
